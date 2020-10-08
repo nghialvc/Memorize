@@ -6,7 +6,10 @@ const Levels = ["Easy","Medium","Hard"];
 const size = 10;
 var divtable = document.getElementById("div_table");
 var divbtn = document.getElementById("div_btn");
-var Matrix = Array(size), currentLevel = 0, onGame = false;
+var divalert = document.getElementById("div_alert");
+var divtimer = document.getElementById("div_timer");
+var btnback = document.getElementById("btn_back");
+var Matrix = Array(size), currentLevel = 0, onGame = false, time = [0,0,0,0], maxtime = 20;
 var currentRow, currentCol;
 
 function createMatrix()
@@ -38,6 +41,7 @@ function newButton(name)
 function showAll()
 {
 	divtable.innerHTML = "";
+	btnback.hidden = true;
 	for (i = 0; i <= size; i++)
 	{
 		divtable.innerHTML += "<div class='row' style='margin-bottom:10px;' id='row_"+i+"'></div>";
@@ -66,8 +70,17 @@ function showAll()
 			}
 		}
 	}
-	var btn = newButton("Start");
-	divbtn.innerHTML = btn;
+	if (onGame == false)
+	{
+		var btn = newButton("Start");
+		divbtn.innerHTML = btn;
+	}
+	else
+	{
+		var btn = newButton("Restart");
+		divbtn.innerHTML = btn;
+	}
+	divalert.hidden = true;
 }
 
 function showSquare(row, col)
@@ -76,6 +89,7 @@ function showSquare(row, col)
 	currentRow = row;
 	currentCol = col;
 	divtable.innerHTML = "";
+	btnback.hidden = false;
 	for (i = 0; i < size; i++)
 	{
 		divtable.innerHTML += "<div class='row justify-content-center' style='margin-bottom:10px;' id='row_"+i+"'></div>";
@@ -93,5 +107,4 @@ function showSquare(row, col)
 	divbtn.innerHTML = btnlast+position+btnnext+btnready;
 }
 
-createMatrix();
 showAll();
